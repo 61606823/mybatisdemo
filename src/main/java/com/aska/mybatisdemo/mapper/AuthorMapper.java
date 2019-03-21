@@ -24,7 +24,7 @@ public interface AuthorMapper {
      * @param id 用户Id
      * @return
      */
-    @Select("select * from author where id = #{id}")
+    @Select("select id, name, age, create_time from author where id = #{id}")
     Author selectAuthor(String id);
 
     /**
@@ -32,7 +32,7 @@ public interface AuthorMapper {
      *
      * @return
      */
-    @Select("select * from author")
+    @Select("select id, name, age, create_time from author")
     List<Author> selectAuthors();
 
     /**
