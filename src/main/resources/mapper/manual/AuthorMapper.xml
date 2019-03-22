@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aska.mybatisdemo.mapper.AuthorMapper">
+    <resultMap id="BaseResultMap" type="com.aska.mybatisdemo.dto.response.AuthorBookBean">
+        <result column="bookId" jdbcType="VARCHAR" property="bookId"/>
+        <result column="bookName" jdbcType="VARCHAR" property="bookName"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="authorName" jdbcType="VARCHAR" property="authorName"/>
+    </resultMap>
+    <select id="selectAuthorBooks" resultMap="BaseResultMap">
+        SELECT
+            b.id bookid,
+            b. NAME bookname,
+            b.price,
+            a.`name` authorname
+        FROM
+            author a
+        INNER JOIN book b ON a.id = b.author_id
+        WHERE
+            b. NAME LIKE CONCAT('%', #{0}, '%');
+  </select>
+</mapper>
