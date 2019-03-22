@@ -57,15 +57,5 @@ public interface AuthorMapper {
      * @param bookName 书籍名称
      * @return
      */
-    @Select("SELECT\n" +
-            "\tb.id bookid,\n" +
-            "\tb. NAME bookname,\n" +
-            "\tb.price,\n" +
-            "\ta.`name` authorname\n" +
-            "FROM\n" +
-            "\tauthor a\n" +
-            "INNER JOIN book b ON a.id = b.author_id\n" +
-            "WHERE\n" +
-            "\tb.NAME LIKE CONCAT('%', #{0}, '%')")
     List<AuthorBookBean> selectAuthorBooks(String bookName);
 }

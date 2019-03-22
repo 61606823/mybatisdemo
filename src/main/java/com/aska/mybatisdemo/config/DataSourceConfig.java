@@ -77,7 +77,7 @@ public class DataSourceConfig {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
         try {
-            sqlSession.setMapperLocations(resolver.getResources("classpath:mapper/*.xml"));
+            sqlSession.setMapperLocations(resolver.getResources("classpath:mapper/*/*.xml"));
 
             return sqlSession.getObject();
         } catch (Exception e) {
