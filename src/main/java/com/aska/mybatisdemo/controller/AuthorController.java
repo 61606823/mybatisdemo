@@ -28,11 +28,10 @@ public class AuthorController extends BaseController {
      *
      * @param request
      * @param bean
-     * @return
      */
     @PostMapping()
-    @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<Author> insertAuthor(HttpServletRequest request, @RequestBody CreateAuthorBean bean) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void insertAuthor(HttpServletRequest request, @RequestBody CreateAuthorBean bean) {
         ModelMapper modelMapper = new ModelMapper();
 
         Author author = modelMapper.map(bean, Author.class);
@@ -40,11 +39,6 @@ public class AuthorController extends BaseController {
         author.setCreateTime(new Date());
 
         authorService.insertAuthor(author);
-
-        ServiceResult<Author> result = new ServiceResult<>();
-        result.setData(author);
-
-        return result;
     }
 
     /**
@@ -94,11 +88,10 @@ public class AuthorController extends BaseController {
      * @param request
      * @param id      用户Id
      * @param bean
-     * @return
      */
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<Author> updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) {
         Author author = authorService.selectAuthor(id);
 
         if (author == null) {
@@ -109,11 +102,6 @@ public class AuthorController extends BaseController {
         author.setAge(bean.getAge());
 
         authorService.updateAuthor(author);
-
-        ServiceResult<Author> result = new ServiceResult<>();
-        result.setData(author);
-
-        return result;
     }
 
     /**
@@ -121,21 +109,15 @@ public class AuthorController extends BaseController {
      *
      * @param request
      * @param id      用户Id
-     * @return
      */
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<Boolean> deleteAuthor(HttpServletRequest request, @PathVariable String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAuthor(HttpServletRequest request, @PathVariable String id) {
         int count = authorService.deleteAuthor(id);
 
         if (count == 0) {
             throw new ApiException(String.format("id：%s无效", id));
         }
-
-        ServiceResult<Boolean> result = new ServiceResult<>();
-        result.setData(true);
-
-        return result;
     }
 
     /**
