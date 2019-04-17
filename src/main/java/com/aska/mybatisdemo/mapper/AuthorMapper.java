@@ -21,6 +21,7 @@ public interface AuthorMapper {
 
     /**
      * 查询单个用户
+     * org.apache.ibatis.builder.annotation.MapperAnnotationBuilder#getSqlSourceFromAnnotations(java.lang.reflect.Method, java.lang.Class, org.apache.ibatis.scripting.LanguageDriver)
      *
      * @param id 用户Id
      * @return
