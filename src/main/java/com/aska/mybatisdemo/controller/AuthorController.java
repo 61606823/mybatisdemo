@@ -8,6 +8,7 @@ import com.aska.mybatisdemo.entity.Author;
 import com.aska.mybatisdemo.exception.ApiException;
 import com.aska.mybatisdemo.service.AuthorService;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @RestController
 @RequestMapping(value = "/author")
+@Slf4j
 public class AuthorController extends BaseController {
     @Autowired
     private AuthorService authorService;
@@ -50,12 +53,10 @@ public class AuthorController extends BaseController {
      */
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<Author> selectAuthor(HttpServletRequest request, @PathVariable String id) {
-        Author author = authorService.selectAuthor(id);
-
-        if (author == null) {
+    public ServiceResult<Author> selectAuthor(HttpServletRequest request, @PathVariable String id) throws Throwable {
+        Author author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
             throw new ApiException(String.format("id：%s无效", id));
-        }
+        });
 
         ServiceResult<Author> result = new ServiceResult<>();
         result.setData(author);
@@ -91,12 +92,10 @@ public class AuthorController extends BaseController {
      */
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) {
-        Author author = authorService.selectAuthor(id);
-
-        if (author == null) {
+    public void updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) throws Throwable {
+        Author author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
             throw new ApiException(String.format("id：%s无效", id));
-        }
+        });
 
         author.setName(bean.getName());
         author.setAge(bean.getAge());

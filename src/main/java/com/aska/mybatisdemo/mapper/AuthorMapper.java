@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuthorMapper {
     /**
@@ -25,7 +26,7 @@ public interface AuthorMapper {
      * @return
      */
     @Select("select id, name, age, create_time from author where id = #{id}")
-    Author selectAuthor(String id);
+    Optional<Author> selectAuthor(String id);
 
     /**
      * 查询所有用户
