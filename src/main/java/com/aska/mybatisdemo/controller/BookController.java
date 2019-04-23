@@ -1,7 +1,7 @@
 package com.aska.mybatisdemo.controller;
 
 import com.aska.mybatisdemo.dto.response.ServiceResult;
-import com.aska.mybatisdemo.entity.Book;
+import com.aska.mybatisdemo.entity.BaseBook;
 import com.aska.mybatisdemo.service.BookService;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ public class BookController extends BaseController {
      */
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<PageInfo<Book>> selectBooks(HttpServletRequest request) {
+    public ServiceResult<PageInfo<BaseBook>> selectBooks(HttpServletRequest request) {
         startPage(request);
 
-        PageInfo<Book> info = new PageInfo<>(bookService.selectBooks());
+        PageInfo<BaseBook> info = new PageInfo<>(bookService.selectBooks());
 
-        ServiceResult<PageInfo<Book>> result = new ServiceResult<>();
+        ServiceResult<PageInfo<BaseBook>> result = new ServiceResult<>();
         result.setData(info);
 
         return result;

@@ -4,7 +4,7 @@ import com.aska.mybatisdemo.dto.request.CreateAuthorBean;
 import com.aska.mybatisdemo.dto.request.UpdateAuthorBean;
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
 import com.aska.mybatisdemo.dto.response.ServiceResult;
-import com.aska.mybatisdemo.entity.Author;
+import com.aska.mybatisdemo.entity.BaseAuthor;
 import com.aska.mybatisdemo.exception.ApiException;
 import com.aska.mybatisdemo.service.AuthorService;
 import com.github.pagehelper.PageInfo;
@@ -37,7 +37,7 @@ public class AuthorController extends BaseController {
     public void insertAuthor(HttpServletRequest request, @RequestBody CreateAuthorBean bean) {
         ModelMapper modelMapper = new ModelMapper();
 
-        Author author = modelMapper.map(bean, Author.class);
+        BaseAuthor author = modelMapper.map(bean, BaseAuthor.class);
         author.setId(UUID.randomUUID().toString());
         author.setCreateTime(new Date());
 
@@ -53,12 +53,12 @@ public class AuthorController extends BaseController {
      */
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<Author> selectAuthor(HttpServletRequest request, @PathVariable String id) throws Throwable {
-        Author author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
+    public ServiceResult<BaseAuthor> selectAuthor(HttpServletRequest request, @PathVariable String id) throws Throwable {
+        BaseAuthor author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
             throw new ApiException(String.format("id：%s无效", id));
         });
 
-        ServiceResult<Author> result = new ServiceResult<>();
+        ServiceResult<BaseAuthor> result = new ServiceResult<>();
         result.setData(author);
 
         return result;
@@ -72,12 +72,12 @@ public class AuthorController extends BaseController {
      */
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ServiceResult<PageInfo<Author>> selectAuthors(HttpServletRequest request) {
+    public ServiceResult<PageInfo<BaseAuthor>> selectAuthors(HttpServletRequest request) {
         startPage(request);
 
-        PageInfo<Author> info = new PageInfo<>(authorService.selectAuthors());
+        PageInfo<BaseAuthor> info = new PageInfo<>(authorService.selectAuthors());
 
-        ServiceResult<PageInfo<Author>> result = new ServiceResult<>();
+        ServiceResult<PageInfo<BaseAuthor>> result = new ServiceResult<>();
         result.setData(info);
 
         return result;
@@ -93,7 +93,7 @@ public class AuthorController extends BaseController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) throws Throwable {
-        Author author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
+        BaseAuthor author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
             throw new ApiException(String.format("id：%s无效", id));
         });
 

@@ -1,8 +1,8 @@
 -- ----------------------------
 -- Table structure for book
 -- ----------------------------
-DROP TABLE IF EXISTS `book`;
-CREATE TABLE `book`
+DROP TABLE IF EXISTS `base_book`;
+CREATE TABLE `base_book`
 (
   `id`          varchar(36)   NOT NULL COMMENT 'id',
   `name`        varchar(50)   NOT NULL COMMENT '名称',

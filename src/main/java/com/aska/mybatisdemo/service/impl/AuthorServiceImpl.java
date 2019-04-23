@@ -1,8 +1,8 @@
 package com.aska.mybatisdemo.service.impl;
 
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
-import com.aska.mybatisdemo.entity.Author;
-import com.aska.mybatisdemo.mapper.AuthorMapper;
+import com.aska.mybatisdemo.entity.BaseAuthor;
+import com.aska.mybatisdemo.mapper.BaseAuthorMapper;
 import com.aska.mybatisdemo.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,28 +14,28 @@ import java.util.Optional;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     @Autowired
-    private AuthorMapper authorMapper;
+    private BaseAuthorMapper authorMapper;
 
     @Override
     @Transactional
-    public void insertAuthor(Author author) {
+    public void insertAuthor(BaseAuthor author) {
         authorMapper.insertAuthor(author);
 
         //int i = 10 / 0;
     }
 
     @Override
-    public Optional<Author> selectAuthor(String id) {
+    public Optional<BaseAuthor> selectAuthor(String id) {
         return authorMapper.selectAuthor(id);
     }
 
     @Override
-    public List<Author> selectAuthors() {
+    public List<BaseAuthor> selectAuthors() {
         return authorMapper.selectAuthors();
     }
 
     @Override
-    public void updateAuthor(Author author) {
+    public void updateAuthor(BaseAuthor author) {
         authorMapper.updateAuthor(author);
     }
 

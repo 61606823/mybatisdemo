@@ -1,7 +1,7 @@
 package com.aska.mybatisdemo.service;
 
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
-import com.aska.mybatisdemo.entity.Author;
+import com.aska.mybatisdemo.entity.BaseAuthor;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,7 @@ public interface AuthorService {
      *
      * @param author
      */
-    void insertAuthor(Author author);
+    void insertAuthor(BaseAuthor author);
 
     /**
      * 查询单个用户
@@ -20,21 +20,21 @@ public interface AuthorService {
      * @param id 用户Id
      * @return
      */
-    Optional<Author> selectAuthor(String id);
+    Optional<BaseAuthor> selectAuthor(String id);
 
     /**
      * 查询所有用户
      *
      * @return
      */
-    List<Author> selectAuthors();
+    List<BaseAuthor> selectAuthors();
 
     /**
      * 更新单个用户
      *
      * @param author
      */
-    void updateAuthor(Author author);
+    void updateAuthor(BaseAuthor author);
 
     /**
      * 删除单个用户

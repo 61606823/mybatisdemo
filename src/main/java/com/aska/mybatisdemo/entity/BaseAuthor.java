@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Author {
+public class BaseAuthor {
     /**
      * id
      */

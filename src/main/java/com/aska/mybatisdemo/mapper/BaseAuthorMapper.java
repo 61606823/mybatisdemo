@@ -1,7 +1,7 @@
 package com.aska.mybatisdemo.mapper;
 
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
-import com.aska.mybatisdemo.entity.Author;
+import com.aska.mybatisdemo.entity.BaseAuthor;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -10,14 +10,14 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 import java.util.Optional;
 
-public interface AuthorMapper {
+public interface BaseAuthorMapper {
     /**
      * 新增用户
      *
      * @param author
      */
-    @Insert("insert into author(id, name, age, create_time) values(#{id}, #{name}, #{age}, #{createTime})")
-    void insertAuthor(Author author);
+    @Insert("insert into base_author(id, name, age, create_time) values(#{id}, #{name}, #{age}, #{createTime})")
+    void insertAuthor(BaseAuthor author);
 
     /**
      * 查询单个用户
@@ -26,31 +26,31 @@ public interface AuthorMapper {
      * @param id 用户Id
      * @return
      */
-    @Select("select id, name, age, create_time from author where id = #{id}")
-    Optional<Author> selectAuthor(String id);
+    @Select("select id, name, age, create_time from base_author where id = #{id}")
+    Optional<BaseAuthor> selectAuthor(String id);
 
     /**
      * 查询所有用户
      *
      * @return
      */
-    @Select("select id, name, age, create_time from author")
-    List<Author> selectAuthors();
+    @Select("select id, name, age, create_time from base_author")
+    List<BaseAuthor> selectAuthors();
 
     /**
      * 更新单个用户
      *
      * @param author
      */
-    @Update("Update author set name = #{name}, age = #{age} where id = #{id}")
-    void updateAuthor(Author author);
+    @Update("Update base_author set name = #{name}, age = #{age} where id = #{id}")
+    void updateAuthor(BaseAuthor author);
 
     /**
      * 删除单个用户
      *
      * @param id 用户Id
      */
-    @Delete("delete from author where id = #{id}")
+    @Delete("delete from base_author where id = #{id}")
     int deleteAuthor(String id);
 
     /**

@@ -1,6 +1,6 @@
 package com.aska.mybatisdemo.service;
 
-import com.aska.mybatisdemo.entity.Book;
+import com.aska.mybatisdemo.entity.BaseBook;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ public interface BookService {
      *
      * @return
      */
-    List<Book> selectBooks();
+    List<BaseBook> selectBooks();
 }
