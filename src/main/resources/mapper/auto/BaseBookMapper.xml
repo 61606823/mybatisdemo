@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aska.mybatisdemo.mapper.BaseBookMapper">
+  <resultMap id="BaseResultMap" type="com.aska.mybatisdemo.entity.BaseBook">
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="author_id" jdbcType="VARCHAR" property="authorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <insert id="insert" parameterType="com.aska.mybatisdemo.entity.BaseBook">
+    insert into base_book (id, `name`, price, 
+      author_id, create_time)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{authorId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, `name`, price, author_id, create_time
+    from base_book
+  </select>
+</mapper>
