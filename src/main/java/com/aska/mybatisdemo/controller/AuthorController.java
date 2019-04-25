@@ -29,7 +29,7 @@ public class AuthorController extends BaseController {
     /**
      * 新增用户
      *
-     * @param request
+     * @param request request
      * @param bean
      */
     @PostMapping()
