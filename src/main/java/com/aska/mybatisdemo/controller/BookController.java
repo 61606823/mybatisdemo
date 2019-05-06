@@ -4,6 +4,7 @@ import com.aska.mybatisdemo.dto.response.ServiceResult;
 import com.aska.mybatisdemo.entity.BaseBook;
 import com.aska.mybatisdemo.service.BookService;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping(value = "/book")
+@Slf4j
 public class BookController extends BaseController {
     @Autowired
     private BookService bookService;
@@ -28,6 +30,8 @@ public class BookController extends BaseController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ServiceResult<PageInfo<BaseBook>> selectBooks(HttpServletRequest request) {
+        log.info("{}-{}", request.getMethod(), request.getRequestURI());
+
         startPage(request);
 
         PageInfo<BaseBook> info = new PageInfo<>(bookService.selectBooks());

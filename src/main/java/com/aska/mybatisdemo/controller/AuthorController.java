@@ -1,5 +1,6 @@
 package com.aska.mybatisdemo.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.aska.mybatisdemo.dto.request.CreateAuthorBean;
 import com.aska.mybatisdemo.dto.request.UpdateAuthorBean;
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
@@ -35,6 +36,8 @@ public class AuthorController extends BaseController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public void insertAuthor(HttpServletRequest request, @RequestBody CreateAuthorBean bean) {
+        log.info("{}-{},bean:{}", request.getMethod(), request.getRequestURI(), JSON.toJSONString(bean));
+
         ModelMapper modelMapper = new ModelMapper();
 
         BaseAuthor author = modelMapper.map(bean, BaseAuthor.class);
@@ -54,6 +57,8 @@ public class AuthorController extends BaseController {
     @GetMapping("/detail/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ServiceResult<BaseAuthor> selectAuthor(HttpServletRequest request, @PathVariable String id) throws Throwable {
+        log.info("{}-{}", request.getMethod(), request.getRequestURI());
+
         BaseAuthor author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
             throw new ApiException(String.format("id：%s无效", id));
         });
@@ -73,6 +78,8 @@ public class AuthorController extends BaseController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     public ServiceResult<PageInfo<BaseAuthor>> selectAuthors(HttpServletRequest request) {
+        log.info("{}-{}", request.getMethod(), request.getRequestURI());
+
         startPage(request);
 
         PageInfo<BaseAuthor> info = new PageInfo<>(authorService.selectAuthors());
@@ -93,6 +100,8 @@ public class AuthorController extends BaseController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) throws Throwable {
+        log.info("{}-{},bean:{}", request.getMethod(), request.getRequestURI(), JSON.toJSONString(bean));
+
         BaseAuthor author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
             throw new ApiException(String.format("id：%s无效", id));
         });
@@ -112,6 +121,8 @@ public class AuthorController extends BaseController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAuthor(HttpServletRequest request, @PathVariable String id) {
+        log.info("{}-{}", request.getMethod(), request.getRequestURI());
+
         int count = authorService.deleteAuthor(id);
 
         if (count == 0) {
@@ -129,6 +140,8 @@ public class AuthorController extends BaseController {
     @GetMapping("/books")
     @ResponseStatus(HttpStatus.OK)
     public ServiceResult<PageInfo<AuthorBookBean>> selectAuthorBooks(HttpServletRequest request, @RequestParam(defaultValue = "") String bookName) {
+        log.info("{}-{}", request.getMethod(), request.getRequestURI());
+
         startPage(request, "a.name");
 
         PageInfo<AuthorBookBean> info = new PageInfo<>(authorService.selectAuthorBooks(bookName));
