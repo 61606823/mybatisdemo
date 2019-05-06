@@ -9,14 +9,17 @@
     </resultMap>
     <select id="selectAuthorBooks" resultMap="BaseResultMap">
         SELECT
-            b.id     bookid,
-            b.NAME   bookname,
-            b.price,
-            a.`name` authorname
+        b.id bookid,
+        b.NAME bookname,
+        b.price,
+        a.`name` authorname
         FROM
-            base_author a
-                INNER JOIN base_book b ON a.id = b.author_id
+        base_author a
+        INNER JOIN base_book b ON a.id = b.author_id
         WHERE
-            b.NAME LIKE CONCAT('%', #{0}, '%');
+        1 = 1
+        <if test="bookName != null and bookName != ''">
+            and b.NAME LIKE CONCAT('%', #{bookName}, '%');
+        </if>
     </select>
 </mapper>

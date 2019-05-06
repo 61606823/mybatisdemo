@@ -2,10 +2,7 @@ package com.aska.mybatisdemo.mapper;
 
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
 import com.aska.mybatisdemo.entity.BaseAuthor;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +56,5 @@ public interface BaseAuthorMapper {
      * @param bookName 书籍名称
      * @return
      */
-    List<AuthorBookBean> selectAuthorBooks(String bookName);
+    List<AuthorBookBean> selectAuthorBooks(@Param("bookName") String bookName);
 }
