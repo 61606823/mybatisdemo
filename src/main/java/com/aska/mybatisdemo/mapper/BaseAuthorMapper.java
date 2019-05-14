@@ -56,5 +56,5 @@ public interface BaseAuthorMapper {
      * @param bookName 书籍名称
      * @return
      */
-    List<AuthorBookBean> selectAuthorBooks(@Param("bookName") String bookName);
+    List<AuthorBookBean> selectAuthorBooks(@Param("pBookName") String bookName);
 }

@@ -18,8 +18,8 @@
         INNER JOIN base_book b ON a.id = b.author_id
         WHERE
         1 = 1
-        <if test="bookName != null and bookName != ''">
-            and b.NAME LIKE CONCAT('%', #{bookName}, '%');
+        <if test="pBookName != null and pBookName != ''">
+            and b.NAME LIKE CONCAT('%', #{pBookName}, '%');
         </if>
     </select>
 </mapper>
