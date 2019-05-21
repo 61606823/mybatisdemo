@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.aska.mybatisdemo.mapper.BaseAuthorMapper">
+    <sql id="tColumns">
+        b.id bookid,
+        b.NAME bookname,
+        b.price,
+        a.`name` authorname
+    </sql>
+
     <resultMap id="ResultMap" type="com.aska.mybatisdemo.dto.response.AuthorBookBean">
         <result column="bookId" jdbcType="VARCHAR" property="bookId"/>
         <result column="bookName" jdbcType="VARCHAR" property="bookName"/>
         <result column="price" jdbcType="DECIMAL" property="price"/>
         <result column="authorName" jdbcType="VARCHAR" property="authorName"/>
     </resultMap>
+
     <select id="selectAuthorBooks" resultMap="ResultMap">
         SELECT
-        b.id bookid,
-        b.NAME bookname,
-        b.price,
-        a.`name` authorname
+        <!-- refid属性与上面spl标签的Id一致 -->
+        <include refid="tColumns"/>
         FROM
         base_author a
         INNER JOIN base_book b ON a.id = b.author_id
