@@ -2,6 +2,7 @@ package com.aska.mybatisdemo.service.impl;
 
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
 import com.aska.mybatisdemo.entity.BaseAuthor;
+import com.aska.mybatisdemo.exception.ApiException;
 import com.aska.mybatisdemo.mapper.BaseAuthorMapper;
 import com.aska.mybatisdemo.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Supplier;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -25,8 +26,10 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Optional<BaseAuthor> selectAuthor(String id) {
-        return authorMapper.selectAuthor(id);
+    public BaseAuthor selectAuthor(String id) throws Throwable {
+        return authorMapper.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
+            throw new ApiException(String.format("id：%s无效", id));
+        });
     }
 
     @Override
@@ -41,7 +44,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public int deleteAuthor(String id) {
-        return authorMapper.deleteAuthor(id);
+        int count = authorMapper.deleteAuthor(id);
+
+        if (count == 0) {
+            throw new ApiException(String.format("id：%s无效", id));
+        }
+
+        return count;
     }
 
     @Override

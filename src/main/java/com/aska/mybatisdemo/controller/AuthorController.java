@@ -6,7 +6,6 @@ import com.aska.mybatisdemo.dto.request.UpdateAuthorBean;
 import com.aska.mybatisdemo.dto.response.AuthorBookBean;
 import com.aska.mybatisdemo.dto.response.ServiceResult;
 import com.aska.mybatisdemo.entity.BaseAuthor;
-import com.aska.mybatisdemo.exception.ApiException;
 import com.aska.mybatisdemo.service.AuthorService;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 @RestController
 @RequestMapping(value = "/author")
@@ -38,9 +36,7 @@ public class AuthorController extends BaseController {
     public void insertAuthor(HttpServletRequest request, @RequestBody CreateAuthorBean bean) {
         log.info("{}-{},bean:{}", request.getMethod(), request.getRequestURI(), JSON.toJSONString(bean));
 
-        ModelMapper modelMapper = new ModelMapper();
-
-        BaseAuthor author = modelMapper.map(bean, BaseAuthor.class);
+        BaseAuthor author = new ModelMapper().map(bean, BaseAuthor.class);
         author.setId(UUID.randomUUID().toString());
         author.setCreateTime(new Date());
 
@@ -59,12 +55,8 @@ public class AuthorController extends BaseController {
     public ServiceResult<BaseAuthor> selectAuthor(HttpServletRequest request, @PathVariable String id) throws Throwable {
         log.info("{}-{}", request.getMethod(), request.getRequestURI());
 
-        BaseAuthor author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
-            throw new ApiException(String.format("id：%s无效", id));
-        });
-
         ServiceResult<BaseAuthor> result = new ServiceResult<>();
-        result.setData(author);
+        result.setData(authorService.selectAuthor(id));
 
         return result;
     }
@@ -102,10 +94,7 @@ public class AuthorController extends BaseController {
     public void updateAuthor(HttpServletRequest request, @PathVariable String id, @RequestBody UpdateAuthorBean bean) throws Throwable {
         log.info("{}-{},bean:{}", request.getMethod(), request.getRequestURI(), JSON.toJSONString(bean));
 
-        BaseAuthor author = authorService.selectAuthor(id).orElseThrow((Supplier<Throwable>) () -> {
-            throw new ApiException(String.format("id：%s无效", id));
-        });
-
+        BaseAuthor author = authorService.selectAuthor(id);
         author.setName(bean.getName());
         author.setAge(bean.getAge());
 
@@ -123,11 +112,7 @@ public class AuthorController extends BaseController {
     public void deleteAuthor(HttpServletRequest request, @PathVariable String id) {
         log.info("{}-{}", request.getMethod(), request.getRequestURI());
 
-        int count = authorService.deleteAuthor(id);
-
-        if (count == 0) {
-            throw new ApiException(String.format("id：%s无效", id));
-        }
+        authorService.deleteAuthor(id);
     }
 
     /**

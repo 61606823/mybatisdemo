@@ -4,7 +4,6 @@ import com.aska.mybatisdemo.dto.response.AuthorBookBean;
 import com.aska.mybatisdemo.entity.BaseAuthor;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AuthorService {
     /**
@@ -20,7 +19,7 @@ public interface AuthorService {
      * @param id 用户Id
      * @return
      */
-    Optional<BaseAuthor> selectAuthor(String id);
+    BaseAuthor selectAuthor(String id) throws Throwable;
 
     /**
      * 查询所有用户
